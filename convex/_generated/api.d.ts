@@ -14,6 +14,7 @@ import type {
   FunctionReference,
 } from "convex/server";
 import type * as queries_profiles from "../queries/profiles.js";
+import type * as tasks from "../tasks.js";
 
 /**
  * A utility for referencing Convex functions in your app's API.
@@ -25,6 +26,7 @@ import type * as queries_profiles from "../queries/profiles.js";
  */
 declare const fullApi: ApiFromModules<{
   "queries/profiles": typeof queries_profiles;
+  tasks: typeof tasks;
 }>;
 export declare const api: FilterApi<
   typeof fullApi,

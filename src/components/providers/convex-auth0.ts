@@ -39,6 +39,7 @@ import { useCallback, useMemo } from "react";
  */
 export function useCustomAuthFromAuth0() {
 	const { user, isLoading } = useUser();
+	const idToken = user?.idToken;
 
 	/**
 	 * Safely fetches the current access token
@@ -47,12 +48,14 @@ export function useCustomAuthFromAuth0() {
 	 */
 	const fetchAccessToken = useCallback(async () => {
 		try {
-			const token = await getAccessToken();
-			return token as string;
+			// maybe the side effect of getAccessToken
+			// will include updating the idToken?
+			void (await getAccessToken());
+			return idToken;
 		} catch {
 			return null;
 		}
-	}, [getAccessToken]);
+	}, [getAccessToken, idToken]);
 
 	/**
 	 * Memoized authentication state object

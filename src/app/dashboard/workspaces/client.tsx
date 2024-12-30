@@ -11,10 +11,12 @@ import {
 import { api } from "../../../../convex/_generated/api";
 
 function Tasks() {
-	const tasks = useQuery(api.tasks.get);
+	const tasks = useQuery(api.tasks.getAuth);
 
 	return (
-		<div>{tasks?.map(({ _id, text }) => <div key={_id}>{text}</div>)}</div>
+		<code>
+			<pre>{JSON.stringify(tasks, null, 2)}</pre>
+		</code>
 	);
 }
 

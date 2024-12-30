@@ -15,6 +15,7 @@ import { fetchMutation, fetchQuery } from "convex/nextjs";
  * flexible authentication mechanism with custom session handling.
  */
 export const auth0 = new Auth0Client({
+	domain: "dev-ui203ramxow30kmt.us.auth0.com",
 	/**
 	 * Allow insecure requests to be made to the authorization server.
 	 * This can be useful when testing with a mock OIDC provider that does not support TLS, locally.
@@ -42,7 +43,7 @@ export const auth0 = new Auth0Client({
 	 * - Adds an 'oauth' property to track the authentication provider
 	 * - Preserves all other existing session and user properties
 	 */
-	async beforeSessionSaved(session) {
+	async beforeSessionSaved(session, idToken) {
 		// Parse the original Auth0 subject identifier to extract provider and formatted ID
 		const parsedSub = parseAuth0Sub(session.user.sub);
 
@@ -56,6 +57,8 @@ export const auth0 = new Auth0Client({
 				sub: parsedSub.formattedId,
 				// Add an additional property to track the OAuth provider
 				oauth: parsedSub.provider,
+				// Raw identity token
+				idToken,
 			},
 		};
 	},
